@@ -11,17 +11,22 @@
 <body>
   <header id="header">
     <h3>Image Picker</h3>
-    <div id="searchTool">
+    <div id="searchTool" class="searchTool">
       <form>
-        <div>
+        <div class="typeField">
           <input id="query" placeholder="Enter Search Terms">
         </div>
-        <div>
-          <input type="submit" value="Search">
+        <!-- typeField -->
+        <div class="button">
+          <input type="submit" value="Search" class="queryButton">
         </div>
+        <!-- button -->
       </form>
     </div>
+    <!-- searchTool -->
   </header>
+  <div class="searchResults"></div>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
