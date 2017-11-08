@@ -1,5 +1,6 @@
 'use strict';
 (function() {
+  const dom = document.querySelector('.searchResults');
   const apiLocation = 'https://api.unsplash.com/';
   const appID =
     '168eb60857bcabe273a4b3fa67d8fb5a62e50f8dc39e0604e8443d00d6c963cf';
@@ -13,6 +14,10 @@
     'click',
     function(e) {
       e.preventDefault();
+      // Clear the previous search results.
+      document.querySelectorAll('.searchResults div').forEach(function(e) {
+        dom.removeChild(e);
+      });
       const queryField = document.querySelector('#queryField').value;
       // Empting the search box
       document.querySelector('#queryField').value = '';
@@ -42,7 +47,6 @@
   );
   function successfulResponse(response) {
     console.log('It works'); // If the request is successful.
-    const dom = document.querySelector('.searchResults');
     for (var i = 0; i < 20; i++) {
       //Assuming there are atleast 20 search results. Secondly I am only displaying 20 results on a page.
       state = {
