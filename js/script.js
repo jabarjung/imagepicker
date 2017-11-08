@@ -7,6 +7,7 @@
     'ed02bb81fc67a17e13c5118ae29fa3954daaa3a7511a4905743e99ba80650893';
   const pageNo = '1';
   const itemsPerPage = '20';
+  let state = {};
   // Listen for the event when the user clicks on the 'Search' button
   document.querySelector('.queryButton').addEventListener(
     'click',
@@ -40,11 +41,24 @@
     false,
   );
   function successfulResponse(response) {
-    // Function definition will go here
-    console.log('It works');
+    console.log('It works'); // If the request is successful.
+    const dom = document.querySelector('.searchResults');
+    for (var i = 0; i < 20; i++) {
+      //Assuming there are atleast 20 search results. Secondly I am only displaying 20 results on a page.
+      state = {
+        returnedImage: response.results[i].urls.thumb,
+      };
+      let imgDiv = document.createElement('div');
+      imgDiv.setAttribute('class', 'imageShown');
+      let imgImg = document.createElement('img');
+      imgImg.setAttribute('src', state.returnedImage);
+      imgImg.setAttribute('alt', 'Unsplash Image');
+      imgDiv.appendChild(imgImg);
+      dom.appendChild(imgDiv);
+    }
   }
   function failedResponse() {
-    console.log("Doesn't work");
+    console.log("Doesn't work"); // If the request failed.
     document.querySelector('.searchResults').textContent =
       'Error processing your request.';
   }
