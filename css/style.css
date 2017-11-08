@@ -18,3 +18,13 @@ h3 {
   width: 100%;
   text-align: center;
 }
+.searchResults {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.imageShown {
+  flex: 1;
+}

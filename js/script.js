@@ -14,7 +14,7 @@
     'click',
     function(e) {
       e.preventDefault();
-      // Clear the previous search results.
+      // Clearing the previous search results.
       document.querySelectorAll('.searchResults div').forEach(function(e) {
         dom.removeChild(e);
       });
@@ -47,8 +47,8 @@
   );
   function successfulResponse(response) {
     console.log('It works'); // If the request is successful.
-    for (var i = 0; i < 20; i++) {
-      //Assuming there are atleast 20 search results. Secondly I am only displaying 20 results on a page.
+    for (var i = 0; i < parseInt(itemsPerPage); i++) {
+      //Assuming there are at least 20 search results. Secondly I am only displaying 20 results on the web page.
       state = {
         returnedImage: response.results[i].urls.thumb,
       };
