@@ -15,6 +15,10 @@
     function(e) {
       e.preventDefault();
       // Clearing the previous search results.
+      if (document.getElementById('clickTextHeading')) {
+        var clickTH = document.getElementById('clickTextHeading');
+        clickTH.parentNode.removeChild(clickTH);
+      }
       document.querySelectorAll('.searchResults div').forEach(function(e) {
         dom.removeChild(e);
       });
@@ -46,7 +50,13 @@
     false,
   );
   function successfulResponse(response) {
-    console.log('It works'); // If the request is successful.
+    let clickTextHeading = document.createElement('h5');
+    clickTextHeading.setAttribute('id', 'clickTextHeading');
+    let clickTextNode = document.createTextNode(
+      'Click on any image below to set it as the background.',
+    );
+    clickTextHeading.appendChild(clickTextNode);
+    document.querySelector('.clickText').appendChild(clickTextHeading);
     for (var i = 0; i < parseInt(itemsPerPage); i++) {
       //Assuming there are at least 20 search results. Secondly I am only displaying 20 results on the web page.
       state = {
@@ -60,9 +70,15 @@
       imgDiv.appendChild(imgImg);
       dom.appendChild(imgDiv);
     }
+    document.querySelectorAll('.imageShown').forEach(function(e) {
+      e.addEventListener('click', setBackground, false);
+    });
+  }
+  function setBackground() {
+    // Function definition go here.
+    console.log('You clicked');
   }
   function failedResponse() {
-    console.log("Doesn't work"); // If the request failed.
     document.querySelector('.searchResults').textContent =
       'Error processing your request.';
   }
