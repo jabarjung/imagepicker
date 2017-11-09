@@ -19,6 +19,9 @@
         var clickTH = document.getElementById('clickTextHeading');
         clickTH.parentNode.removeChild(clickTH);
       }
+      if (document.querySelector('.searchResults')) {
+        document.querySelector('.searchResults').textContent = '';
+      }
       document.querySelectorAll('.searchResults div').forEach(function(e) {
         dom.removeChild(e);
       });
@@ -50,7 +53,7 @@
     false,
   );
   function successfulResponse(response) {
-    let clickTextHeading = document.createElement('h5');
+    let clickTextHeading = document.createElement('h6');
     clickTextHeading.setAttribute('id', 'clickTextHeading');
     let clickTextNode = document.createTextNode(
       'Click on any image below to set it as the background.',
@@ -68,7 +71,6 @@
       let imgImg = document.createElement('img');
       imgImg.setAttribute('src', state.returnedImageThumb);
       imgImg.setAttribute('alt', state.returnedImageFull); // To use as a background image if the image is clicked.
-      // imgImg.setAttribute('alt', 'Unsplash Image');
       imgDiv.appendChild(imgImg);
       dom.appendChild(imgDiv);
     }
@@ -77,16 +79,30 @@
     });
   }
   function setBackground(imageDiv) {
-    let testDiv = document.createElement('div');
-    testDiv.setAttribute('class', 'imageb');
-    let imgb = document.createElement('img');
-    imgb.setAttribute('src', imageDiv.target.getAttribute('alt')); // 'imageDiv.target.src' works as well but this is more formal.
-    imgb.setAttribute('alt', 'B Image');
-    testDiv.appendChild(imgb);
-    dom.appendChild(testDiv);
+    let backgroundDiv = document.createElement('div');
+    backgroundDiv.setAttribute('id', 'backgroundImgDiv');
+    backgroundDiv.setAttribute('class', 'backgroundDivClass');
+    // Clearing up the page
+    var clickTH = document.getElementById('clickTextHeading');
+    clickTH.parentNode.removeChild(clickTH);
+    document.querySelectorAll('.searchResults div').forEach(function(e) {
+      dom.removeChild(e);
+    });
+    // Finished clearing up the page
+    dom.appendChild(backgroundDiv);
+    document.getElementById('backgroundImgDiv').style.backgroundImage =
+      'url(' + imageDiv.target.getAttribute('alt') + ')';
+    // url(imageDiv.target.getAttribute('alt'),);
+    // let bImg = document.createElement('img');
+    // bImg.setAttribute('src', imageDiv.target.getAttribute('alt')); // 'imageDiv.target.src' works as well but this is more formal.
+    // imgb.setAttribute('alt', 'B Image');
+    // testDiv.appendChild(imgb);
+    // imageDiv.target.getAttribute('alt');
   }
   function failedResponse() {
+    var clickTH = document.getElementById('clickTextHeading');
+    clickTH.parentNode.removeChild(clickTH);
     document.querySelector('.searchResults').textContent =
-      'Error processing your request.';
+      'Your query did not return any results. Please try a different one.';
   }
 })();
