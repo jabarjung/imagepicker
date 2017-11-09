@@ -60,13 +60,15 @@
     for (var i = 0; i < parseInt(itemsPerPage); i++) {
       //Assuming there are at least 20 search results. Secondly I am only displaying 20 results on the web page.
       state = {
-        returnedImage: response.results[i].urls.thumb,
+        returnedImageThumb: response.results[i].urls.thumb,
+        returnedImageFull: response.results[i].urls.full,
       };
       let imgDiv = document.createElement('div');
       imgDiv.setAttribute('class', 'imageShown');
       let imgImg = document.createElement('img');
-      imgImg.setAttribute('src', state.returnedImage);
-      imgImg.setAttribute('alt', 'Unsplash Image');
+      imgImg.setAttribute('src', state.returnedImageThumb);
+      imgImg.setAttribute('alt', state.returnedImageFull); // To use as a background image if the image is clicked.
+      // imgImg.setAttribute('alt', 'Unsplash Image');
       imgDiv.appendChild(imgImg);
       dom.appendChild(imgDiv);
     }
@@ -74,9 +76,14 @@
       e.addEventListener('click', setBackground, false);
     });
   }
-  function setBackground() {
-    // Function definition go here.
-    console.log('You clicked');
+  function setBackground(imageDiv) {
+    let testDiv = document.createElement('div');
+    testDiv.setAttribute('class', 'imageb');
+    let imgb = document.createElement('img');
+    imgb.setAttribute('src', imageDiv.target.getAttribute('alt')); // 'imageDiv.target.src' works as well but this is more formal.
+    imgb.setAttribute('alt', 'B Image');
+    testDiv.appendChild(imgb);
+    dom.appendChild(testDiv);
   }
   function failedResponse() {
     document.querySelector('.searchResults').textContent =
