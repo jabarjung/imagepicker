@@ -15,6 +15,7 @@
     function(e) {
       e.preventDefault();
       // Clearing the previous search results.
+      document.body.style.backgroundImage = 'None';
       if (document.getElementById('clickTextHeading')) {
         var clickTH = document.getElementById('clickTextHeading');
         clickTH.parentNode.removeChild(clickTH);
@@ -79,9 +80,9 @@
     });
   }
   function setBackground(imageDiv) {
-    let backgroundDiv = document.createElement('div');
-    backgroundDiv.setAttribute('id', 'backgroundImgDiv');
-    backgroundDiv.setAttribute('class', 'backgroundDivClass');
+    // let backgroundDiv = document.createElement('div');
+    // backgroundDiv.setAttribute('id', 'backgroundImgDiv');
+    // backgroundDiv.setAttribute('class', 'backgroundDivClass');
     // Clearing up the page
     var clickTH = document.getElementById('clickTextHeading');
     clickTH.parentNode.removeChild(clickTH);
@@ -89,9 +90,18 @@
       dom.removeChild(e);
     });
     // Finished clearing up the page
-    dom.appendChild(backgroundDiv);
-    document.getElementById('backgroundImgDiv').style.backgroundImage =
+    // dom.appendChild(backgroundDiv);
+    /* document.getElementById('backgroundImgDiv').style.backgroundImage =
+       'url(' + imageDiv.target.getAttribute('alt') + ')';
+    document.getElementById('backgroundImgDiv').style.backgroundColor =
+      'Tomato';
+    */
+    document.body.style.backgroundImage =
       'url(' + imageDiv.target.getAttribute('alt') + ')';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundSize = 'cover'; // To scale the image to cover the screen fully
+    // document.body.style.backgroundSize = 'contain'; // To fit the image fully
     // url(imageDiv.target.getAttribute('alt'),);
     // let bImg = document.createElement('img');
     // bImg.setAttribute('src', imageDiv.target.getAttribute('alt')); // 'imageDiv.target.src' works as well but this is more formal.
