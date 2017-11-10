@@ -42,7 +42,7 @@ http-server -p 3000 (You can choose different port if you want)
 
 4. Open the browser and go to 'localhost:3000' and it should run the app.
 
-## Authors
+## Author
 
 * **JabarJung Sandhu**
 
