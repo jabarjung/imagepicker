@@ -71,7 +71,7 @@
       imgDiv.setAttribute('class', 'imageShown');
       let imgImg = document.createElement('img');
       imgImg.setAttribute('src', state.returnedImageThumb);
-      imgImg.setAttribute('alt', state.returnedImageFull); // To use as a background image if the image is clicked.
+      imgImg.setAttribute('alt', state.returnedImageFull); // To use as a background image if the image is clicked. It's a full version of the image.
       imgDiv.appendChild(imgImg);
       dom.appendChild(imgDiv);
     }
@@ -80,9 +80,6 @@
     });
   }
   function setBackground(imageDiv) {
-    // let backgroundDiv = document.createElement('div');
-    // backgroundDiv.setAttribute('id', 'backgroundImgDiv');
-    // backgroundDiv.setAttribute('class', 'backgroundDivClass');
     // Clearing up the page
     var clickTH = document.getElementById('clickTextHeading');
     clickTH.parentNode.removeChild(clickTH);
@@ -90,24 +87,12 @@
       dom.removeChild(e);
     });
     // Finished clearing up the page
-    // dom.appendChild(backgroundDiv);
-    /* document.getElementById('backgroundImgDiv').style.backgroundImage =
-       'url(' + imageDiv.target.getAttribute('alt') + ')';
-    document.getElementById('backgroundImgDiv').style.backgroundColor =
-      'Tomato';
-    */
     document.body.style.backgroundImage =
       'url(' + imageDiv.target.getAttribute('alt') + ')';
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundPosition = 'center center';
     document.body.style.backgroundSize = 'cover'; // To scale the image to cover the screen fully
     // document.body.style.backgroundSize = 'contain'; // To fit the image fully
-    // url(imageDiv.target.getAttribute('alt'),);
-    // let bImg = document.createElement('img');
-    // bImg.setAttribute('src', imageDiv.target.getAttribute('alt')); // 'imageDiv.target.src' works as well but this is more formal.
-    // imgb.setAttribute('alt', 'B Image');
-    // testDiv.appendChild(imgb);
-    // imageDiv.target.getAttribute('alt');
   }
   function failedResponse() {
     var clickTH = document.getElementById('clickTextHeading');
