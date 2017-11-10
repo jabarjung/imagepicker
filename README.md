@@ -10,17 +10,17 @@ You will need the following tools to run this app:
 
 2. Install Node.js from https://nodejs.org/en/. It will also install 'npm' on your computer.
 
-  a. To check if you have Node.js installed, run this command in your terminal:
+* To check if you have Node.js installed, run this command in your terminal:
 
-    ```
-    node -v
-    ```
+```
+node -v
+```
 
-  b. To confirm that you have npm installed you can run this command in your terminal:
+* To confirm that you have npm installed you can run this command in your terminal:
 
-    ```
-    npm -v
-    ```
+```
+npm -v
+```
 
 3. Install http-server available from https://www.npmjs.com/package/http-server. Run the following command to install it globally.
 
