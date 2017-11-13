@@ -38,16 +38,15 @@ h6 {
   flex: 1;
 }
 .pastSelections {
-  margin: 0px;
-  padding: 0px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-end;
   position: fixed;
   left: 0px;
   bottom: 0px;
+  overflow-x: scroll;
+  width: 100%;
 }
 .pastSelectionShown {
   flex: 1;
