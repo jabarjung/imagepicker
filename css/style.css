@@ -37,3 +37,18 @@ h6 {
 .imageShown {
   flex: 1;
 }
+.pastSelections {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+}
+.pastSelectionShown {
+  flex: 1;
+}

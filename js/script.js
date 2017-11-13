@@ -1,6 +1,7 @@
 'use strict';
 (function() {
   const dom = document.querySelector('.searchResults');
+  const divPastSelections = document.querySelector('.pastSelections');
   const apiLocation = 'https://api.unsplash.com/';
   const appID =
     '168eb60857bcabe273a4b3fa67d8fb5a62e50f8dc39e0604e8443d00d6c963cf';
@@ -9,6 +10,28 @@
   const pageNo = '1';
   const itemsPerPage = '20';
   let state = {};
+  // Retrieve the images from local storage if any present
+  if (localStorage.length > 0) {
+    let pastSelectionsHeading = document.createElement('h6');
+    pastSelectionsHeading.setAttribute('id', 'pastSelectionsHeading');
+    let pastSelectionsHeadingTextNode = document.createTextNode(
+      'All of the past selections are listed at the bottom',
+    );
+    pastSelectionsHeading.appendChild(pastSelectionsHeadingTextNode);
+    document
+      .querySelector('.pastSelectionsText')
+      .appendChild(pastSelectionsHeading);
+  }
+  var i;
+  for (i = 0; i < localStorage.length; i++) {
+    let thumbDiv = document.createElement('div');
+    thumbDiv.setAttribute('class', 'pastSelectionShown');
+    let thumbImg = document.createElement('img');
+    thumbImg.setAttribute('src', localStorage.getItem(i.toString()));
+    thumbImg.setAttribute('alt', 'Past selection for background');
+    thumbDiv.appendChild(thumbImg);
+    divPastSelections.appendChild(thumbDiv);
+  }
   // Listen for the event when the user clicks on the 'Search' button
   document.querySelector('.queryButton').addEventListener(
     'click',
@@ -54,6 +77,13 @@
     false,
   );
   function successfulResponse(response) {
+    // Clearing up the past selections
+    var pSHeading = document.getElementById('pastSelectionsHeading');
+    pSHeading.parentNode.removeChild(pSHeading);
+    document.querySelectorAll('.pastSelections div').forEach(function(e) {
+      divPastSelections.removeChild(e);
+    });
+    // Finished clearing up the past selections
     let clickTextHeading = document.createElement('h6');
     clickTextHeading.setAttribute('id', 'clickTextHeading');
     let clickTextNode = document.createTextNode(
@@ -89,6 +119,11 @@
     // Finished clearing up the page
     document.body.style.backgroundImage =
       'url(' + imageDiv.target.getAttribute('alt') + ')';
+    // Add the respective thumbnail to the local storage.
+    localStorage.setItem(
+      localStorage.length.toString(),
+      imageDiv.target.getAttribute('src'),
+    );
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundPosition = 'center center';
     document.body.style.backgroundSize = 'cover'; // To scale the image to cover the screen fully
