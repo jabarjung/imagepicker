@@ -46,9 +46,11 @@
       if (document.querySelector('.searchResults')) {
         document.querySelector('.searchResults').textContent = '';
       }
-      document.querySelectorAll('.searchResults div').forEach(function(e) {
-        dom.removeChild(e);
-      });
+      if (document.querySelectorAll('.searchResults div')) {
+        document.querySelectorAll('.searchResults div').forEach(function(e) {
+          dom.removeChild(e);
+        });
+      }
       const queryField = document.querySelector('#queryField').value;
       // Empting the search box
       document.querySelector('#queryField').value = '';
@@ -78,11 +80,15 @@
   );
   function successfulResponse(response) {
     // Clearing up the past selections
-    var pSHeading = document.getElementById('pastSelectionsHeading');
-    pSHeading.parentNode.removeChild(pSHeading);
-    document.querySelectorAll('.pastSelections div').forEach(function(e) {
-      divPastSelections.removeChild(e);
-    });
+    if (document.getElementById('pastSelectionsHeading')) {
+      var pSHeading = document.getElementById('pastSelectionsHeading');
+      pSHeading.parentNode.removeChild(pSHeading);
+    }
+    if (document.querySelectorAll('.pastSelections div')) {
+      document.querySelectorAll('.pastSelections div').forEach(function(e) {
+        divPastSelections.removeChild(e);
+      });
+    }
     // Finished clearing up the past selections
     let clickTextHeading = document.createElement('h6');
     clickTextHeading.setAttribute('id', 'clickTextHeading');
@@ -111,11 +117,15 @@
   }
   function setBackground(imageDiv) {
     // Clearing up the page
-    var clickTH = document.getElementById('clickTextHeading');
-    clickTH.parentNode.removeChild(clickTH);
-    document.querySelectorAll('.searchResults div').forEach(function(e) {
-      dom.removeChild(e);
-    });
+    if (document.getElementById('clickTextHeading')) {
+      var clickTH = document.getElementById('clickTextHeading');
+      clickTH.parentNode.removeChild(clickTH);
+    }
+    if (document.querySelectorAll('.searchResults div')) {
+      document.querySelectorAll('.searchResults div').forEach(function(e) {
+        dom.removeChild(e);
+      });
+    }
     // Finished clearing up the page
     document.body.style.backgroundImage =
       'url(' + imageDiv.target.getAttribute('alt') + ')';
@@ -130,8 +140,10 @@
     // document.body.style.backgroundSize = 'contain'; // To fit the image fully
   }
   function failedResponse() {
-    var clickTH = document.getElementById('clickTextHeading');
-    clickTH.parentNode.removeChild(clickTH);
+    if (document.getElementById('clickTextHeading')) {
+      var clickTH = document.getElementById('clickTextHeading');
+      clickTH.parentNode.removeChild(clickTH);
+    }
     document.querySelector('.searchResults').textContent =
       'Your query did not return any results. Please try a different one.';
   }
