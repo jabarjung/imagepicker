@@ -10,6 +10,58 @@
   const pageNo = '1';
   const itemsPerPage = '20';
   let state = {};
+  // Insta Filter function
+  function applyInstaFilter(imageSource, whichFilterToApply) {
+    var canvas = document.createElement('canvas');
+    canvas.width = imageSource.width;
+    canvas.height = imageSource.height;
+    var context = canvas.getContext('2d');
+    context.drawImage(imageSource, 0, 0);
+    imageSource.style.display = 'none';
+    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imageData.data;
+    var original = function() {
+      // Do nothing
+      // Empty function
+    };
+    var grayscale = function() {
+      for (var i = 0; i < data.length; i += 4) {
+        var average = (data[i] + data[i+1] + data[i+2])/3;
+        data[i] = average; // red
+        data[i+1] = average; // green
+        data[i+2] = average; // blue
+      }
+      /*
+      for (var i = 0; i < data.length; i += 4) {
+        var red = data[i];
+        var green = data[i+1];
+        var blue = data[i+2];
+        var valueToSet = 0.2126*red + 0.7152*green + 0.0722*blue;
+        data[i] = data[i+1] = data[i+2] = valueToSet;
+      }
+      */
+      context.putImageData(imageData, 0, 0);
+    };
+    var invert = function() {
+      for (var i = 0; i < data.length; i += 4) {
+        data[i] = 255 - data[i];     // red
+        data[i+1] = 255 - data[i+1]; // green
+        data[i+2] = 255 - data[i+2]; // blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    var enhance = function() {
+      for (var i = 0; i < data.length; i += 4) {
+        data[i] = data[i]*1.24;     // red
+        data[i+1] = data[i+1]*1.33; // green
+        data[i+2] = data[i+2]*1.21; // blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    eval(whichFilterToApply.valueOf().concat('()')); // This way I won't have to write 'if else' blocks.
+    return canvas.toDataURL();
+  };
+  // Finished Instagram-like filter
   // Retrieve the images from local storage if any present
   if (localStorage.length > 0) {
     let pastSelectionsHeading = document.createElement('h6');
@@ -18,19 +70,18 @@
       'All of the past selections are listed at the bottom',
     );
     pastSelectionsHeading.appendChild(pastSelectionsHeadingTextNode);
-    document
-      .querySelector('.pastSelectionsText')
-      .appendChild(pastSelectionsHeading);
+    document.querySelector('.pastSelectionsText').appendChild(pastSelectionsHeading);
   }
-  var i;
-  for (i = 0; i < localStorage.length; i++) {
-    let thumbDiv = document.createElement('div');
-    thumbDiv.setAttribute('class', 'pastSelectionShown');
-    let thumbImg = document.createElement('img');
-    thumbImg.setAttribute('src', localStorage.getItem(i.toString()));
-    thumbImg.setAttribute('alt', 'Past selection for background');
-    thumbDiv.appendChild(thumbImg);
-    divPastSelections.appendChild(thumbDiv);
+  for (var i = 0; i < localStorage.length; i++) {
+    if (!(localStorage.key(i).includes('_fullSizeImage'))) {
+      let thumbDiv = document.createElement('div');
+      thumbDiv.setAttribute('class', 'pastSelectionShown');
+      let thumbImg = document.createElement('img');
+      thumbImg.setAttribute('src', localStorage.getItem(localStorage.key(i))); // i.toString() also works.
+      thumbImg.setAttribute('alt', 'Past selection for background');
+      thumbDiv.appendChild(thumbImg);
+      divPastSelections.appendChild(thumbDiv);
+    }
   }
   // Listen for the event when the user clicks on the 'Search' button
   document.querySelector('.queryButton').addEventListener(
@@ -90,10 +141,11 @@
       });
     }
     // Finished clearing up the past selections
+    document.querySelector('.pastSelectionsText').textContent = '';
     let clickTextHeading = document.createElement('h6');
     clickTextHeading.setAttribute('id', 'clickTextHeading');
     let clickTextNode = document.createTextNode(
-      'Click on any image below to set it as the background.',
+      'Click on any image below to set it as the background. (Scroll to the right for more)',
     );
     clickTextHeading.appendChild(clickTextNode);
     document.querySelector('.clickText').appendChild(clickTextHeading);
@@ -127,8 +179,44 @@
       });
     }
     // Finished clearing up the page
-    document.body.style.backgroundImage =
-      'url(' + imageDiv.target.getAttribute('alt') + ')';
+    // Add the full size image to the local storage in order to process the filters on it.
+    localStorage.setItem(localStorage.length.toString().concat('_fullSizeImage'),
+      imageDiv.target.getAttribute('alt'),
+    );
+    // Retrieving the full size image from the local local storage.
+    var imageSource = new Image();
+    var filteredImage = new Image();
+    var whichFilterToApply = '';
+    // Asking user for an input
+    var dialogBox = document.getElementById('dialog');
+    var originalB = document.getElementById('original');
+    var grayscaleB = document.getElementById('grayscale');
+    var invertB = document.getElementById('invert');
+    var enhanceB = document.getElementById('enhance');
+    originalB.addEventListener('click', setFilterValue);
+    grayscaleB.addEventListener('click', setFilterValue);
+    invertB.addEventListener('click', setFilterValue);
+    enhanceB.addEventListener('click', setFilterValue);
+    dialogBox.showModal();
+    function setFilterValue() {
+      whichFilterToApply = this.value.toLowerCase();
+      dialogBox.close();
+    };
+    // Finished asking user for an input
+    document.querySelectorAll('[type=button]').forEach(function(e) {
+      e.addEventListener('click', buttonClicked);
+    });
+    function buttonClicked() {
+      var imageSourceString = (localStorage.length-1).toString().concat('_fullSizeImage');
+      imageSource.src = localStorage.getItem(imageSourceString);
+      imageSource.crossOrigin = "Anonymous";
+      imageSource.onload = function() {
+        // Filter method call
+        filteredImage.src = applyInstaFilter(this, whichFilterToApply);
+      };
+      filteredImage.onload = function() {
+        document.body.style.backgroundImage = 'url(' + filteredImage.src + ')';
+      };
     // Add the respective thumbnail to the local storage.
     localStorage.setItem(
       localStorage.length.toString(),
@@ -139,12 +227,13 @@
     document.body.style.backgroundSize = 'cover'; // To scale the image to cover the screen fully
     // document.body.style.backgroundSize = 'contain'; // To fit the image fully
   }
+}
   function failedResponse() {
     if (document.getElementById('clickTextHeading')) {
       var clickTH = document.getElementById('clickTextHeading');
       clickTH.parentNode.removeChild(clickTH);
     }
-    document.querySelector('.searchResults').textContent =
+    document.querySelector('.pastSelectionsText').textContent =
       'Your query did not return any results. Please try a different one.';
   }
 })();

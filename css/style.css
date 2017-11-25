@@ -28,14 +28,24 @@ h6 {
   text-align: center;
 }
 .searchResults {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
+  overflow-x: scroll;
+  width: 100%;
 }
 .imageShown {
   flex: 1;
+}
+.pastSelectionsText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pastSelections {
   display: flex;
@@ -50,4 +60,14 @@ h6 {
 }
 .pastSelectionShown {
   flex: 1;
+}
+dialog::backdrop {
+  background: rgba(255,255,255,0.5);
+}
+.dialogBox {
+  display: flex;
+  flex: 1;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
 }
