@@ -27,9 +27,9 @@
     var grayscale = function() {
       for (var i = 0; i < data.length; i += 4) {
         var average = (data[i] + data[i+1] + data[i+2])/3;
-        data[i] = average; // red
-        data[i+1] = average; // green
-        data[i+2] = average; // blue
+        data[i] = average; // Red
+        data[i+1] = average; // Green
+        data[i+2] = average; // Blue
       }
       /*
       for (var i = 0; i < data.length; i += 4) {
@@ -42,19 +42,52 @@
       */
       context.putImageData(imageData, 0, 0);
     };
-    var invert = function() {
+    var invert = function() { // Also called 'negaposi'
       for (var i = 0; i < data.length; i += 4) {
-        data[i] = 255 - data[i];     // red
-        data[i+1] = 255 - data[i+1]; // green
-        data[i+2] = 255 - data[i+2]; // blue
+        data[i] = 255 - data[i];     // Red
+        data[i+1] = 255 - data[i+1]; // Green
+        data[i+2] = 255 - data[i+2]; // Blue
       }
       context.putImageData(imageData, 0, 0);
     };
     var enhance = function() {
       for (var i = 0; i < data.length; i += 4) {
-        data[i] = data[i]*1.24;     // red
-        data[i+1] = data[i+1]*1.33; // green
-        data[i+2] = data[i+2]*1.21; // blue
+        data[i] = data[i]*1.24;     // Red
+        data[i+1] = data[i+1]*1.33; // Green
+        data[i+2] = data[i+2]*1.21; // Blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    var sepia = function() {
+      for (var i = 0; i < data.length; i += 4) {
+        data[i] = data[i] * 1.07; // Red
+        data[i+1] = data[i+1] * 0.74; // Green
+        data[i+2] = data[i+2] * 0.43; // Blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    var opacity = function() {
+      const val = 0.5; // Using a default value.
+      for (var i = 0; i < data.length; i += 4) {
+        data[i+3] = data[i+3] * val; // Opacity
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    var brighten = function() {
+      const val = 50; // Using a default value.
+      for (var i = 0; i < data.length; i += 4) {
+        data[i] += val; // Red
+        data[i+1] += val; // Green
+        data[i+2] += val; // Blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+    var darken = function() {
+      const val = 50; // Using a default value.
+      for (var i = 0; i < data.length; i += 4) {
+        data[i] -= val; // Red
+        data[i+1] -= val; // Green
+        data[i+2] -= val; // Blue
       }
       context.putImageData(imageData, 0, 0);
     };
@@ -193,10 +226,18 @@
     var grayscaleB = document.getElementById('grayscale');
     var invertB = document.getElementById('invert');
     var enhanceB = document.getElementById('enhance');
+    var sepiaB = document.getElementById('sepia');
+    var opacityB = document.getElementById('opacity');
+    var brightenB = document.getElementById('brighten');
+    var darkenB = document.getElementById('darken');
     originalB.addEventListener('click', setFilterValue);
     grayscaleB.addEventListener('click', setFilterValue);
     invertB.addEventListener('click', setFilterValue);
     enhanceB.addEventListener('click', setFilterValue);
+    sepiaB.addEventListener('click', setFilterValue);
+    opacityB.addEventListener('click', setFilterValue);
+    brightenB.addEventListener('click', setFilterValue);
+    darkenB.addEventListener('click', setFilterValue);
     dialogBox.showModal();
     function setFilterValue() {
       whichFilterToApply = this.value.toLowerCase();
