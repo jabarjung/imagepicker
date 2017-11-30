@@ -48,3 +48,6 @@ http-server -p 3000 (You can choose different port if you want)
 ## Author
 
 * **JabarJung Sandhu**
+
+Demo of the App:
+![Demo](imagepicker/demo.gif "Demo")
