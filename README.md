@@ -33,6 +33,9 @@ sudo npm install http-server -g
 ### Running the App
 
 1. Clone this repo to your local drive.
+```
+git clone https://github.com/jabarjung/imagepicker.git
+```
 2. Open Terminal app and cd to the root directory of the app i.e. 'imagepicker' or whatever you have renamed it to.
 3. Run the following command:
 
