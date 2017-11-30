@@ -50,4 +50,4 @@ http-server -p 3000 (You can choose different port if you want)
 * **JabarJung Sandhu**
 
 Demo of the App:
-![Demo](imagepicker/demo.gif "Demo")
+![Demo](https://github.com/jabarjung/imagepicker/blob/master/demo.gif "Demo")
