@@ -4,9 +4,9 @@
   const divPastSelections = document.querySelector('.pastSelections');
   const apiLocation = 'https://api.unsplash.com/';
   const appID =
-    '168eb60857bcabe273a4b3fa67d8fb5a62e50f8dc39e0604e8443d00d6c963cf';
+    '<put appID here>';
   const apiSecret =
-    'ed02bb81fc67a17e13c5118ae29fa3954daaa3a7511a4905743e99ba80650893';
+    '<put apiSecret here>';
   const pageNo = '1';
   const itemsPerPage = '20';
   let state = {};
